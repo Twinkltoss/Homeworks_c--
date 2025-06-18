@@ -31,7 +31,7 @@ template <typename T> void Sort(T* arr, T size) {
 template <typename T> T Binary_Search(T* arr, T size,T val) {
 	int start_index;
 	int end_index;
-	while()ku ku si ki
+	while()ku ku si kibrtkmgbmfrtjgbm 
 }
 
 
