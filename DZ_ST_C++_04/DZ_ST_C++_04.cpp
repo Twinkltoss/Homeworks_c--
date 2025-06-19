@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 //Задание. 1
 //Реализуйте шаблонные функции для поиска максимума,
-//минимума, сортировки массива(любым алгоритмом сортировки), двоичного поиска в массиве, замены элемента
-//массива на переданное значение.
+//минимума, сортировки массива(любым алгоритмом сортировки), двоичного поиска в массиве, 
+// замены элемента массива на переданное значение.
 template <typename T> T Min_Val(T* arr,T size) {
 	T min = arr[0];
 	for (T i = 0; i < size; i++)	{
@@ -28,10 +28,25 @@ template <typename T> void Sort(T* arr, T size) {
 		}
 	}
 }
-template <typename T> T Binary_Search(T* arr, T size,T val) {
-	int start_index;
-	int end_index;
-	while()
+template <typename T> T Binary_Search(T* arr, T size,const T& val) {
+	int begin=0;
+	int end=size-1;
+	while (begin<=end) {
+		int mid = begin + (end - begin) / 2;
+		if (arr[mid]==val) {
+			return mid;
+		}
+		else if (arr[mid]<val) {
+			begin = mid + 1;
+		}
+		else{
+			end = mid - 1;
+		}
+	}
+	return -1;
+}
+template <typename T> void Replace_elem(T* arr,T ind,const T& val) {
+	arr[ind] = val;
 }
 
 
@@ -40,6 +55,19 @@ template <typename T> T Binary_Search(T* arr, T size,T val) {
 //заполнение матрицы с клавиатуры, заполнение случайными значениями, отображение матрицы, арифметические
 //операции с помощью перегруженных операторов(+, –,
 //	*, / ), поиск максимального и минимального элемента.
+ 
+template <class T> class Matrix {
+	T** matrix;
+	size_t size;
+public:
+	Matrix(size_t size) :size{ size } {
+		matrix = new T * [size];
+		for (size_t i = 0; i < size; i++) {
+			matrix[i] = new T[size];
+		}
+	}
+};
+
 //Задание. 3
 //Есть строка символов, признаком конца, которой является; .В строке могут быть фигурные, круглые, квадратные
 //скобки.Скобки могут быть открывающими и закрывающими.
