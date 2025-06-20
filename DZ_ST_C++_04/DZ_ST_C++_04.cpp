@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+using namespace std;
 //Задание. 1
 //Реализуйте шаблонные функции для поиска максимума,
 //минимума, сортировки массива(любым алгоритмом сортировки), двоичного поиска в массиве, 
@@ -66,6 +67,36 @@ public:
 			matrix[i] = new T[size];
 		}
 	}
+	void Manual_Filling() {
+		for (size_t i = 0; i < size; i++){
+			system("cls");
+			for (size_t j = 0; j < size; j++) {
+				cout << "Enter value for [" << i << "][" << j << "] = ";
+				cin >> matrix[i][j];
+			}
+		}
+	}
+	void Random_Filling() {
+		for (size_t i = 0; i < size; i++){
+			for (size_t j = 0; j < size; j++) {
+				matrix[i][j] = rand() % 78;
+			}
+		}
+	}
+	void Show_Matrix() {
+		for (size_t i = 0; i < size; i++){			
+			for (size_t j = 0; j < size; j++) {
+				cout << matrix[i][j]<<"\t";
+			}
+			cout << "\n";
+		}
+	}
+	~Matrix() {
+		for (size_t i = 0; i < size; i++) {
+			delete[] matrix[i];
+		}
+		delete[] matrix;
+	}
 };
 
 //Задание. 3
@@ -107,8 +138,14 @@ template <typename T>void Print_Arr(T* arr, int size) {
 
 int main()
 {
-	int size = 5;
-	int* arr = new int[size] {1,12,7,-5,4};
+	srand(time(0));
+	//int size = 5;
+	//int* arr = new int[size] {1,12,7,-5,4};
+
+	Matrix<int> mat1(5);
+	mat1.Random_Filling();
+	mat1.Show_Matrix();
+
 
 	//std::cout << Min_Val(arr, size);
 	//std::cout <<"\n" << Max_Val(arr, size);
