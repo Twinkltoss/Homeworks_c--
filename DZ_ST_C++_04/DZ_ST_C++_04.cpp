@@ -83,12 +83,49 @@ public:
 			}
 		}
 	}
+	void Min() {
+		size_t min = matrix[0][0];
+		size_t indexI,indexJ;
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++){
+				if (min > matrix[i][j]) {
+					min=matrix[i][j];
+					indexI = i;
+					indexJ = j;
+				}
+			}
+		}
+		cout << "Minimum value [" << indexI << "][" << indexJ << "]=" << min;
+	}
+	void Max() {
+		size_t max = matrix[0][0];
+		size_t indexI, indexJ;
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++) {
+				if (max < matrix[i][j]) {
+					max = matrix[i][j];
+					indexI = i;
+					indexJ = j;
+				}
+			}
+		}
+		cout << "Maximum value [" << indexI << "][" << indexJ << "]=" << max;
+	}
+	Matrix operator+(const Matrix& other) {
+		Matrix temp(size);
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++) {
+				temp[i][j] =matrix[i][j] + other.matrix[i][j];
+			}
+		}	
+		return temp;
+	}
 	void Show_Matrix() {
 		for (size_t i = 0; i < size; i++){			
 			for (size_t j = 0; j < size; j++) {
 				cout << matrix[i][j]<<"\t";
 			}
-			cout << "\n";
+			cout << "\n\n";
 		}
 	}
 	~Matrix() {
@@ -143,8 +180,16 @@ int main()
 	//int* arr = new int[size] {1,12,7,-5,4};
 
 	Matrix<int> mat1(5);
+	Matrix<int> mat2(5);
 	mat1.Random_Filling();
+	mat2.Random_Filling();
 	mat1.Show_Matrix();
+	cout << endl;
+	mat2.Show_Matrix();
+	mat1 + mat2;
+	cout << endl;
+	mat1.Show_Matrix();
+
 
 
 	//std::cout << Min_Val(arr, size);
