@@ -49,7 +49,11 @@ template <typename T> T Binary_Search(T* arr, T size,const T& val) {
 template <typename T> void Replace_elem(T* arr,T ind,const T& val) {
 	arr[ind] = val;
 }
-
+template <typename T>void Print_Arr(T* arr, int size) {
+	for (T i = 0; i < size; i++) {
+		std::cout << arr[i] << "  ";
+	}
+}
 
 //Задание.2
 //Создайте шаблонный класс матрица.Необходимо реализовать динамическое выделение памяти, очистку памяти,
@@ -65,6 +69,15 @@ public:
 		matrix = new T * [size];
 		for (size_t i = 0; i < size; i++) {
 			matrix[i] = new T[size];
+		}
+	}
+	Matrix(const Matrix& other) {
+		matrix = new T * [size];
+		for (size_t i = 0; i < size; i++){
+			matrix[i] = new T[size];
+			for (size_t j = 0; j < size; j++){
+				matrix[i][j] = other.matrix[i][j];
+			}
 		}
 	}
 	void Manual_Filling() {
@@ -111,13 +124,55 @@ public:
 		}
 		cout << "Maximum value [" << indexI << "][" << indexJ << "]=" << max;
 	}
-	Matrix operator+(const Matrix& other) {
+	Matrix& operator=(const Matrix& other) {
+		for (size_t i = 0; i < size; i++) {
+			delete[] matrix[i];
+		}
+		delete[] matrix;
+		size = other.size;
+		matrix = new T * [size];
+		for (size_t i = 0; i < size; i++) {
+			matrix[i] = new T [size];
+			for (size_t j = 0; j < size; j++) {
+				matrix[i][j] = other.matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	Matrix operator+(const Matrix& other)const {
 		Matrix temp(size);
 		for (size_t i = 0; i < size; i++) {
 			for (size_t j = 0; j < size; j++) {
-				temp[i][j] =matrix[i][j] + other.matrix[i][j];
+				temp.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
 			}
 		}	
+		return temp;
+	}
+	Matrix operator-(const Matrix& other)const {
+		Matrix temp(size);
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++) {
+				temp.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
+			}
+		}
+		return temp;
+	}
+	Matrix operator*(const Matrix& other)const {
+		Matrix temp(size);
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++) {
+				temp.matrix[i][j] = matrix[i][j] * other.matrix[i][j];
+			}
+		}
+		return temp;
+	}
+	Matrix operator/(const Matrix& other)const {
+		Matrix temp(size);
+		for (size_t i = 0; i < size; i++) {
+			for (size_t j = 0; j < size; j++) {
+				temp.matrix[i][j] = matrix[i][j] / other.matrix[i][j];
+			}
+		}
 		return temp;
 	}
 	void Show_Matrix() {
@@ -137,14 +192,12 @@ public:
 };
 
 //Задание. 3
-//Есть строка символов, признаком конца, которой является; .В строке могут быть фигурные, круглые, квадратные
-//скобки.Скобки могут быть открывающими и закрывающими.
+//Есть строка символов, признаком конца, которой является; .В строке могут быть фигурные, круглые, квадратные скобки.
+// Скобки могут быть открывающими и закрывающими.
 //Необходимо проверить корректность расстановки скобок.
-//При этом необходимо, чтобы выполнились следующие
-//правила :
-//1. Каждая открывающая скобка должна иметь справа
-//такую же закрывающую.Обратное также должно быть
-//верно.
+//При этом необходимо, чтобы выполнились следующие правила :
+//1. Каждая открывающая скобка должна иметь справа такую же закрывающую.
+//Обратное также должно быть верно.
 //2. Открывающие и закрывающие пары скобок разных
 //типов должны быть правильно расположены по отношению друг к другу.
 //■ Пример правильной строки : ({ x - y - z }*[x + 2y] - (z + 4x));
@@ -152,14 +205,16 @@ public:
 //Если все правила соблюдены выведите информационное
 //сообщение о корректности строки, иначе покажите строку
 //до места возникновения первой ошибки.
+
+
+
 //Задание 3-1.
 //Создать имитационную модель "остановка маршрутных
 //такси". Необходимо вводить следующую информацию:
 //среднее время между появлениями пассажиров на остановке в разное время суток, среднее время между появлениями маршруток на остановке в разное время суток,
 //тип остановки(конечная или нет).Необходимо определить : среднее время пребывание человека на остановке,
 //достаточный интервал времени между приходами маршруток, чтобы на остановке находилось не более N людей
-//одновременно.Количество свободных мест в маршрутке
-//является случайной величиной.
+//одновременно.Количество свободных мест в маршрутке является случайной величиной.
 //Задание 3-2.
 //Разработать приложение, имитирующее очередь печати
 //принтера.Должны быть клиенты, посылающие запросы
@@ -167,11 +222,7 @@ public:
 //Каждый новый клиент попадает в очередь в зависимости
 //от своего приоритета.Необходимо сохранять статистику печати(пользователь, время) в отдельной очереди.
 //Предусмотреть вывод статистики на экран.
-template <typename T>void Print_Arr(T* arr, int size) {
-	for (T i = 0; i < size; i++) {
-		std::cout << arr[i] << "  ";
-	}
-}
+
 
 int main()
 {
@@ -181,14 +232,15 @@ int main()
 
 	Matrix<int> mat1(5);
 	Matrix<int> mat2(5);
+	Matrix<int> mat3(5);
 	mat1.Random_Filling();
 	mat2.Random_Filling();
 	mat1.Show_Matrix();
 	cout << endl;
 	mat2.Show_Matrix();
-	mat1 + mat2;
+	mat3=mat1/ mat2;
 	cout << endl;
-	mat1.Show_Matrix();
+	mat3.Show_Matrix();
 
 
 
